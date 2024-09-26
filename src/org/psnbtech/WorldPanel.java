@@ -74,8 +74,9 @@ public class WorldPanel extends JPanel {
 		
 
 		if(game.isGameOver()) {
-			drawTextCentered("org.psnbtech.Game Over", TITLE_FONT, g2d, -25);
+			drawTextCentered("Game Over", TITLE_FONT, g2d, -25);
 			drawTextCentered("Final Score: " + game.getScore(), SUBTITLE_FONT, g2d, 10);
+			drawTextCentered("Aperte P para Perder novamente kkkk", SUBTITLE_FONT, g2d, 200);
 		} else if(game.isPaused()) {
 			drawTextCentered("Paused", TITLE_FONT, g2d, -25);
 		} else if(game.isShowingLevel()) {
