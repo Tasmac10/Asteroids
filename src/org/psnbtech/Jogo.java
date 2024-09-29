@@ -60,7 +60,7 @@ public class Jogo extends JFrame {
 
 	private boolean reiniciarJogo;
 
-	private Jogo() {
+	public Jogo() {
 		super("Asteroides");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -153,7 +153,8 @@ public class Jogo extends JFrame {
 		return reiniciar;
 	}
 
-	private void iniciarJogo() {
+	public void iniciarJogo() {
+		;
 		this.aleatorio = new Random();
 		this.entidades = new LinkedList<Entidade>();
 		this.entidadesPendentes = new ArrayList<>();
@@ -345,5 +346,4 @@ public class Jogo extends JFrame {
 		Jogo jogo = new Jogo();
 		jogo.iniciarJogo();
 	}
-
 }

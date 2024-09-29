@@ -10,6 +10,8 @@ import java.awt.geom.AffineTransform;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import org.psnbtech.entidade.Entidade;
 import org.psnbtech.util.Vetor2;
@@ -28,6 +30,53 @@ public class PainelMundo extends JPanel {
 
 		setPreferredSize(new Dimension(TAMANHO_MUNDO, TAMANHO_MUNDO));
 		setBackground(Color.BLACK);
+		setFocusable(true); // Permite que o painel receba foco
+		requestFocusInWindow(); // Solicita o foco ao painel
+
+		// Adiciona um KeyListener para capturar eventos de teclado
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_W:
+					case KeyEvent.VK_UP:
+						jogo.getJogador().setTurbinando(true);
+						break;
+					case KeyEvent.VK_A:
+					case KeyEvent.VK_LEFT:
+						jogo.getJogador().setRotacionarEsquerda(true);
+						break;
+					case KeyEvent.VK_D:
+					case KeyEvent.VK_RIGHT:
+						jogo.getJogador().setRotacionarDireita(true);
+						break;
+					case KeyEvent.VK_SPACE:
+						jogo.getJogador().setDisparando(true);
+						break;
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_W:
+					case KeyEvent.VK_UP:
+						jogo.getJogador().setTurbinando(false);
+						break;
+					case KeyEvent.VK_A:
+					case KeyEvent.VK_LEFT:
+						jogo.getJogador().setRotacionarEsquerda(false);
+						break;
+					case KeyEvent.VK_D:
+					case KeyEvent.VK_RIGHT:
+						jogo.getJogador().setRotacionarDireita(false);
+						break;
+					case KeyEvent.VK_SPACE:
+						jogo.getJogador().setDisparando(false);
+						break;
+				}
+			}
+		});
 	}
 
 	@Override
