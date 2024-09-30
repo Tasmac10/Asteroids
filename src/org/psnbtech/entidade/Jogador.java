@@ -1,13 +1,13 @@
-package org.POO.entidade;
+package org.psnbtech.entidade;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.POO.Jogo;
-import org.POO.PainelMundo;
-import org.POO.util.Vetor2;
+import org.psnbtech.Jogo;
+import org.psnbtech.PainelMundo;
+import org.psnbtech.util.Vetor2;
 
 public class Jogador extends Entidade {
 

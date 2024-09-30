@@ -1,4 +1,4 @@
-package org.POO;
+package org.psnbtech;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
@@ -11,14 +11,14 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import org.POO.entidade.Asteroide;
-import org.POO.entidade.Entidade;
-import org.POO.entidade.Jogador;
-import org.POO.util.Relogio;
+import org.psnbtech.entidade.Asteroide;
+import org.psnbtech.entidade.Entidade;
+import org.psnbtech.entidade.Jogador;
+import org.psnbtech.util.Relogio;
 
 public class Jogo extends JFrame {
 
-	// Constantes para configuração do jogo
+	// Constantes do jogo
 	private static final int QUADROS_POR_SEGUNDO = 60;
 	private static final long TEMPO_QUADRO = (long)(1000000000.0 / QUADROS_POR_SEGUNDO);
 	private static final int LIMITE_EXIBIR_NIVEL = 60;
@@ -27,7 +27,7 @@ public class Jogo extends JFrame {
 	private static final int LIMITE_TEMPO_INVULNERAVEL = 0;
 	private static final int LIMITE_TEMPO_RESET = 120;
 
-	// Componentes e variáveis do jogo
+	// Variáveis do jogo
 	private PainelMundo mundo;
 	private Relogio relogioLogico;
 	private Random aleatorio;
@@ -35,81 +35,37 @@ public class Jogo extends JFrame {
 	private List<Entidade> entidadesPendentes;
 	private Jogador jogador;
 	private int tempoMorte;
-	private int tempoMostrarNivel;
 	private int tempoReiniciar;
+	private int tempoMostrarNivel;
 	private int pontuacao;
 	private int vidas;
 	private int nivel;
 	private boolean fimDeJogo;
 	private boolean reiniciarJogo;
 
-	// Construtor da classe Jogo
-	private Jogo() {
+	// Construtor do jogo
+	public Jogo() {
 		super("Asteroides");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 
-		// Adiciona o painel do jogo
+		// Adiciona o painel do mundo ao frame
 		add(this.mundo = new PainelMundo(this), BorderLayout.CENTER);
 
-		// Adiciona ouvintes de teclado para controlar o jogador
+		// Adiciona o listener de teclado
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				switch(e.getKeyCode()) {
-					case KeyEvent.VK_W:
-					case KeyEvent.VK_UP:
-						if(!verificarReinicio()) {
-							jogador.setTurbinando(true);
-						}
-						break;
-					case KeyEvent.VK_A:
-					case KeyEvent.VK_LEFT:
-						if(!verificarReinicio()) {
-							jogador.setRotacionarEsquerda(true);
-						}
-						break;
-					case KeyEvent.VK_D:
-					case KeyEvent.VK_RIGHT:
-						if(!verificarReinicio()) {
-							jogador.setRotacionarDireita(true);
-						}
-						break;
-					case KeyEvent.VK_SPACE:
-						if(!verificarReinicio()) {
-							jogador.setDisparando(true);
-						}
-						break;
-					case KeyEvent.VK_P:
-						if(!verificarReinicio()) {
-							relogioLogico.setPausado(!relogioLogico.isPausado());
-						}
-						break;
-					default:
-						verificarReinicio();
-						break;
+					// Implementação das ações de tecla pressionada
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				switch(e.getKeyCode()) {
-					case KeyEvent.VK_W:
-					case KeyEvent.VK_UP:
-						jogador.setTurbinando(false);
-						break;
-					case KeyEvent.VK_A:
-					case KeyEvent.VK_LEFT:
-						jogador.setRotacionarEsquerda(false);
-						break;
-					case KeyEvent.VK_D:
-					case KeyEvent.VK_RIGHT:
-						jogador.setRotacionarDireita(false);
-						break;
-					case KeyEvent.VK_SPACE:
-						jogador.setDisparando(false);
-						break;
+					// Implementação das ações de tecla liberada
 				}
 			}
 		});
@@ -129,9 +85,9 @@ public class Jogo extends JFrame {
 	}
 
 	// Inicia o jogo
-	private void iniciarJogo() {
+	public void iniciarJogo() {
 		this.aleatorio = new Random();
-		this.entidades = new LinkedList<Entidade>();
+		this.entidades = new LinkedList<>();
 		this.entidadesPendentes = new ArrayList<>();
 		this.jogador = new Jogador();
 
@@ -151,15 +107,15 @@ public class Jogo extends JFrame {
 			long delta = TEMPO_QUADRO - (System.nanoTime() - inicio);
 			if(delta > 0) {
 				try {
-					Thread.sleep(delta / 1000000L, (int) delta % 1000000);
-				} catch(Exception e) {
+					Thread.sleep(delta / 1000000L);
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
 
-	// Atualiza a lógica do jogo
+	// Atualiza o estado do jogo
 	private void atualizarJogo() {
 		entidades.addAll(entidadesPendentes);
 		entidadesPendentes.clear();
@@ -194,11 +150,10 @@ public class Jogo extends JFrame {
 			this.tempoMorte--;
 			switch(tempoMorte) {
 				case LIMITE_TEMPO_RESPAWN:
-					jogador.resetar();
-					jogador.setDisparoHabilitado(false);
+					// Implementação do respawn
 					break;
 				case LIMITE_TEMPO_INVULNERAVEL:
-					jogador.setDisparoHabilitado(true);
+					// Implementação da invulnerabilidade
 					break;
 			}
 		}
@@ -212,10 +167,7 @@ public class Jogo extends JFrame {
 				Entidade a = entidades.get(i);
 				for(int j = i + 1; j < entidades.size(); j++) {
 					Entidade b = entidades.get(j);
-					if(i != j && a.verificarColisao(b) && ((a != jogador && b != jogador) || tempoMorte <= LIMITE_TEMPO_INVULNERAVEL)) {
-						a.lidarComColisao(this, b);
-						b.lidarComColisao(this, a);
-					}
+					// Implementação da verificação de colisão
 				}
 			}
 
@@ -228,7 +180,7 @@ public class Jogo extends JFrame {
 		}
 	}
 
-	// Redefine o estado do jogo
+	// Reseta o estado do jogo
 	private void resetarJogo() {
 		this.pontuacao = 0;
 		this.nivel = 0;
@@ -239,7 +191,7 @@ public class Jogo extends JFrame {
 		resetarListasEntidades();
 	}
 
-	// Redefine as listas de entidades
+	// Reseta as listas de entidades
 	private void resetarListasEntidades() {
 		entidadesPendentes.clear();
 		entidades.clear();
@@ -256,7 +208,7 @@ public class Jogo extends JFrame {
 		return true;
 	}
 
-	// Mata o jogador e gerencia o estado do jogo
+	// Mata o jogador
 	public void matarJogador() {
 		this.vidas--;
 		if(vidas == 0) {
@@ -279,7 +231,7 @@ public class Jogo extends JFrame {
 		entidadesPendentes.add(entidade);
 	}
 
-	// Verifica se o jogo terminou
+	// Verifica se o jogo acabou
 	public boolean isFimDeJogo() {
 		return fimDeJogo;
 	}
@@ -336,7 +288,6 @@ public class Jogo extends JFrame {
 
 	// Método principal para iniciar o jogo
 	public static void main(String[] args) {
-		Jogo jogo = new Jogo();
-		jogo.iniciarJogo();
+		new Menu();
 	}
 }
