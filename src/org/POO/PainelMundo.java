@@ -1,4 +1,4 @@
-package org.psnbtech;
+package org.POO;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +11,8 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import org.psnbtech.entidade.Entidade;
-import org.psnbtech.util.Vetor2;
+import org.POO.entidade.Entidade;
+import org.POO.util.Vetor2;
 
 public class PainelMundo extends JPanel {
 

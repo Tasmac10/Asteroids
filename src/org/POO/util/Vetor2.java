@@ -1,4 +1,4 @@
-package org.psnbtech.util;
+package org.POO.util;
 
 public class Vetor2 {
 

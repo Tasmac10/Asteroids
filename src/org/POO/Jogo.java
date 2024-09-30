@@ -1,4 +1,4 @@
-package org.psnbtech;
+package org.POO;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
@@ -11,10 +11,10 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import org.psnbtech.entidade.Asteroide;
-import org.psnbtech.entidade.Entidade;
-import org.psnbtech.entidade.Jogador;
-import org.psnbtech.util.Relogio;
+import org.POO.entidade.Asteroide;
+import org.POO.entidade.Entidade;
+import org.POO.entidade.Jogador;
+import org.POO.util.Relogio;
 
 public class Jogo extends JFrame {
 

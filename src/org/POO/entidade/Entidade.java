@@ -1,10 +1,10 @@
-package org.psnbtech.entidade;
+package org.POO.entidade;
 
 import java.awt.Graphics2D;
 
-import org.psnbtech.Jogo;
-import org.psnbtech.PainelMundo;
-import org.psnbtech.util.Vetor2;
+import org.POO.Jogo;
+import org.POO.PainelMundo;
+import org.POO.util.Vetor2;
 
 public abstract class Entidade {
 
