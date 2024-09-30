@@ -26,6 +26,7 @@ public class PainelMundo extends JPanel {
 	public PainelMundo(Jogo jogo) {
 		this.jogo = jogo;
 
+		// Define o tamanho preferido do painel e a cor de fundo
 		setPreferredSize(new Dimension(TAMANHO_MUNDO, TAMANHO_MUNDO));
 		setBackground(Color.BLACK);
 	}
@@ -40,15 +41,18 @@ public class PainelMundo extends JPanel {
 		g2d.setColor(Color.WHITE);
 		AffineTransform identidade = g2d.getTransform();
 
+		// Itera sobre todas as entidades do jogo e as desenha
 		Iterator<Entidade> iter = jogo.getEntidades().iterator();
 		while (iter.hasNext()) {
 			Entidade entidade = iter.next();
 			if (entidade != jogo.getJogador() || jogo.podeDesenharJogador()) {
 				Vetor2 pos = entidade.getPosicao();
 
+				// Desenha a entidade na posição atual
 				desenharEntidade(g2d, entidade, pos.x, pos.y);
 				g2d.setTransform(identidade);
 
+				// Verifica se a entidade precisa ser desenhada em uma posição espelhada
 				double raio = entidade.getRaioColisao();
 				double x = (pos.x < raio) ? pos.x + TAMANHO_MUNDO
 						: (pos.x > TAMANHO_MUNDO - raio) ? pos.x - TAMANHO_MUNDO : pos.x;
@@ -62,10 +66,12 @@ public class PainelMundo extends JPanel {
 			}
 		}
 
+		// Desenha a pontuação se o jogo não terminou
 		if (!jogo.isFimDeJogo()) {
 			g.drawString("Pontuação: " + jogo.getPontuacao(), 10, 15);
 		}
 
+		// Desenha mensagens de fim de jogo, pausa ou nível atual
 		if (jogo.isFimDeJogo()) {
 			desenharTextoCentralizado("Fim de Jogo", FONTE_TITULO, g2d, -25);
 			desenharTextoCentralizado("Pontuação Final: " + jogo.getPontuacao(), FONTE_SUBTITULO, g2d, 10);
@@ -76,6 +82,7 @@ public class PainelMundo extends JPanel {
 			desenharTextoCentralizado("Nível: " + jogo.getNivel(), FONTE_TITULO, g2d, -25);
 		}
 
+		// Desenha as vidas do jogador
 		g2d.translate(15, 30);
 		g2d.scale(0.85, 0.85);
 		for (int i = 0; i < jogo.getVidas(); i++) {
@@ -86,11 +93,13 @@ public class PainelMundo extends JPanel {
 		}
 	}
 
+	// Método auxiliar para desenhar texto centralizado
 	private void desenharTextoCentralizado(String texto, Font fonte, Graphics2D g, int y) {
 		g.setFont(fonte);
 		g.drawString(texto, TAMANHO_MUNDO / 2 - g.getFontMetrics().stringWidth(texto) / 2, TAMANHO_MUNDO / 2 + y);
 	}
 
+	// Método auxiliar para desenhar uma entidade
 	private void desenharEntidade(Graphics2D g2d, Entidade entidade, double x, double y) {
 		g2d.translate(x, y);
 		double rotacao = entidade.getRotacao();
