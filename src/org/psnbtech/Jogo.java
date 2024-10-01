@@ -1,4 +1,4 @@
-package org.POO;
+package org.psnbtech;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
@@ -11,10 +11,10 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-import org.POO.entidade.Asteroide;
-import org.POO.entidade.Entidade;
-import org.POO.entidade.Jogador;
-import org.POO.util.Relogio;
+import org.psnbtech.entidade.Asteroide;
+import org.psnbtech.entidade.Entidade;
+import org.psnbtech.entidade.Jogador;
+import org.psnbtech.util.Relogio;
 
 public class Jogo extends JFrame {
 
@@ -60,7 +60,7 @@ public class Jogo extends JFrame {
 
 	private boolean reiniciarJogo;
 
-	private Jogo() {
+	public Jogo() {
 		super("Asteroides");
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -102,13 +102,15 @@ public class Jogo extends JFrame {
 						break;
 
 					case KeyEvent.VK_P:
-						if(!verificarReinicio()) {
 							relogioLogico.setPausado(!relogioLogico.isPausado());
-						}
 						break;
 
+					case KeyEvent.VK_R:
+						if (fimDeJogo) {
+							reiniciarJogo = true;
+						}
+						break;
 					default:
-						verificarReinicio();
 						break;
 
 				}
@@ -147,13 +149,12 @@ public class Jogo extends JFrame {
 
 	private boolean verificarReinicio() {
 		boolean reiniciar = (fimDeJogo && tempoReiniciar <= 0);
-		if(reiniciar) {
+		if (reiniciar) {
 			reiniciarJogo = true;
 		}
 		return reiniciar;
 	}
-
-	private void iniciarJogo() {
+	public void iniciarJogo() {
 		this.aleatorio = new Random();
 		this.entidades = new LinkedList<Entidade>();
 		this.entidadesPendentes = new ArrayList<>();
@@ -179,6 +180,10 @@ public class Jogo extends JFrame {
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
+			}
+			if (reiniciarJogo) {
+				resetarJogo();
+				reiniciarJogo = false;
 			}
 		}
 	}
@@ -342,8 +347,7 @@ public class Jogo extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Jogo jogo = new Jogo();
-		jogo.iniciarJogo();
+		new Menu();
 	}
 
 }

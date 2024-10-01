@@ -1,4 +1,4 @@
-package org.POO;
+package org.psnbtech;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +11,8 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import org.POO.entidade.Entidade;
-import org.POO.util.Vetor2;
+import org.psnbtech.entidade.Entidade;
+import org.psnbtech.util.Vetor2;
 
 public class PainelMundo extends JPanel {
 
@@ -69,7 +69,7 @@ public class PainelMundo extends JPanel {
 		if (jogo.isFimDeJogo()) {
 			desenharTextoCentralizado("Fim de Jogo", FONTE_TITULO, g2d, -25);
 			desenharTextoCentralizado("Pontuação Final: " + jogo.getPontuacao(), FONTE_SUBTITULO, g2d, 10);
-			desenharTextoCentralizado("Aperte P para Perder novamente kkkk", FONTE_SUBTITULO, g2d, 200);
+			desenharTextoCentralizado("Aperte R para reiniciar o jogo", FONTE_SUBTITULO, g2d, 200);
 		} else if (jogo.isPausado()) {
 			desenharTextoCentralizado("Pausado", FONTE_TITULO, g2d, -25);
 		} else if (jogo.isMostrandoNivel()) {
